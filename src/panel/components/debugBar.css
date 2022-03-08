@@ -1,0 +1,22 @@
+.debugBar > * {
+  padding: 2px;
+}
+
+.debugBar a,
+.debugBar a:visited,
+.debugBar a:hover,
+.debugBar a:active {
+  color: var(--color-text-primary);
+}
+
+.debugBar button {
+  background: var(--color-background-elevation-1);
+  border: 0;
+  color: var(--color-text-primary);
+  height: 100%;
+  cursor: pointer;
+}
+
+.debugBar button:hover {
+  background: var(--color-background-elevation-2);
+}

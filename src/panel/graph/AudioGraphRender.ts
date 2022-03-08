@@ -62,6 +62,7 @@ export class AudioGraphRender {
       antialias: true,
       autoDensity: true,
       resolution: window.devicePixelRatio,
+      autoStart: false,
     }));
     this.pixiView = app.view;
     // window.$app = app;

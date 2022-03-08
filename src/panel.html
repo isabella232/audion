@@ -321,14 +321,19 @@
         max-width: 20rem;
         background-color: var(--color-background-elevation-1);
       }
-      .toolbar-shadow {
+      .toolbar {
         position: relative;
         white-space: nowrap;
-        height: 26px;
         overflow: hidden;
         display: flex;
         flex: none;
         align-items: center;
+      }
+      .toolbar-shadow {
+        height: 26px;
+      }
+      .web-audio-debug {
+        height: 26px;
       }
       .toolbar-dropdown {
         height: 100%;
@@ -343,10 +348,6 @@
       .dropdown-title,
       .dropdown-button {
         display: inline-block;
-      }
-      .web-audio-debug {
-        flex: 0 0 200px;
-        width: 200px;
       }
       .web-audio-graph {
         position: relative;
@@ -370,7 +371,7 @@
   <body>
     <div class="web-audio-container">
       <div class="web-audio-toolbar-container vbox">
-        <div class="toolbar-shadow">
+        <div class="toolbar-shadow toolbar">
           <div class="toolbar-button toolbar-garbage-button"></div>
           <div class="toolbar-divider"></div>
           <div class="toolbar-dropdown">
@@ -380,6 +381,7 @@
             </div>
           </div>
         </div>
+        <div class="web-audio-debug toolbar"></div>
       </div>
       <div class="web-audio-content-container">
         <div class="web-audio-content-panel">
