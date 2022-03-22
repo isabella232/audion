@@ -1,4 +1,4 @@
-import {merge, Subject} from 'rxjs';
+import {merge} from 'rxjs';
 import {
   map,
   scan,
@@ -25,10 +25,6 @@ const attachController = new DebuggerAttachEventController();
 const webAudioEvents$ = new WebAudioEventObservable(attachController);
 const webAudioRealtimeData = new WebAudioRealtimeData();
 
-const debugGraphContext$ = new Subject<{
-  graphContext: Audion.GraphContext;
-}>();
-
 const serializedGraphContext$ = webAudioEvents$.pipe(
   integrateWebAudioGraph(webAudioRealtimeData),
   // Split graph contexts into an observable for each unique graph context id.
@@ -45,7 +41,7 @@ const serializedGraphContext$ = webAudioEvents$.pipe(
   share(),
 );
 
-const allGraphs$ = merge(serializedGraphContext$, debugGraphContext$).pipe(
+const allGraphs$ = merge(serializedGraphContext$).pipe(
   // Persistently observe web audio events and integrate events into context
   // objects. Collect those into an object of all current graphs.
   scan<Audion.GraphContext, {[key: string]: Audion.GraphContext}>(
@@ -74,7 +70,6 @@ const panel = new DevtoolsGraphPanel(
       take(1),
     ),
     serializedGraphContext$.pipe(map((graphContext) => ({graphContext}))),
-    debugGraphContext$,
   ),
 );
 
@@ -91,8 +86,6 @@ panel.requests$.subscribe({
   next(value) {
     if (value.type === Audion.DevtoolsRequestType.COLLECT_GARBAGE) {
       attachController.sendCommand('HeapProfiler.collectGarbage').subscribe();
-    } else if (value.type === Audion.DebugActionType.UPDATE) {
-      debugGraphContext$.next(value);
     }
   },
 });
